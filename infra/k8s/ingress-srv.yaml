@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+spec:
+  rules:
+    # browser sẽ dùng url này để request vào k8s cluster
+    # có config path nào thì trỏ tới service nào kìa
+    # ta phải add 127.0.0.1   ticket.dev trong file /etc/hosts
+    - host: ticket.dev
+      http:
+        paths:
+          - path: /api/users/?(.*)
+            backend:
+              serviceName: auth-srv
+              servicePort: 4000
+          
