@@ -1,11 +1,15 @@
 import express from 'express'
 import {json} from 'body-parser'
 
+import { errorHandler } from './middlewares/error-handler'
+
 const app = express()
 app.use(json())
+app.use(errorHandler)
 
-app.get('/api/users/current-user', (req, res) => {
-    res.send('Hi there!')
+// cái error này sẽ không chạy vào error-handler, chưa biết tại sao
+app.all('*', () => {
+    throw new Error('error ne')
 })
 
 app.listen(3000, () => {
