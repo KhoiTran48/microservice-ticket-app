@@ -27,6 +27,19 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+userSchema.methods.toJSON = function(){
+    const user = this
+    const userObject = user.toObject()
+    userObject.id = user._id
+    
+    delete userObject.password
+    delete userObject.tokens
+    delete userObject.__v
+    delete userObject._id
+
+    return userObject
+}
+
 userSchema.pre('save', async function(done){
     if (this.isModified('password')) {
         const hashed = await Password.toHash(this.get('password'))
