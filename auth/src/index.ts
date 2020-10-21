@@ -2,6 +2,7 @@ import express from 'express'
 import {json} from 'body-parser'
 import 'express-async-errors'
 import mongoose from 'mongoose'
+import cookieSession from 'cookie-session'
 
 import currentUserRouter from './routes/current-user'
 import signinRouter from './routes/signin'
@@ -10,7 +11,17 @@ import signupRouter from './routes/signup'
 import { errorHandler } from './middlewares/error-handler'
 
 const app = express()
+app.set('trust proxy', true)
 app.use(json())
+app.use(
+    cookieSession({
+        // no encrypt cookie
+        signed: false,
+        // only be used via HTTPS connection
+        secure: true
+    })
+)
+
 app.use(currentUserRouter)
 app.use(signinRouter)
 app.use(signoutRouter)
