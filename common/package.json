@@ -1,0 +1,23 @@
+{
+  "name": "@kt_tickets/common",
+  "version": "1.0.18",
+  "description": "",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/**/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "del .\\build\\*",
+    "build": "tsc",
+    "pub": "git add . && git commit -m \"Updates\" && npm version patch && npm run build && npm publish"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "del-cli": "^3.0.1",
+    "typescript": "^4.0.5"
+  }
+}
