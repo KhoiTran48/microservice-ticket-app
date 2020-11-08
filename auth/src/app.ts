@@ -17,7 +17,7 @@ app.use(
         // no encrypt cookie
         signed: false,
         // only be used via HTTPS connection
-        secure: process.env.NODE_ENV !== 'test'
+        // secure: process.env.NODE_ENV !== 'test'
     })
 )
 
