@@ -1,4 +1,4 @@
-import { currentUser } from './../middlewares/current-user';
+import { currentUser } from '@kt_tickets/common';
 import express from 'express'
 // import { requireAuth } from '../middlewares/require-auth'
 
