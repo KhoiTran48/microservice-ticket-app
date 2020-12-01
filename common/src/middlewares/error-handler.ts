@@ -7,5 +7,9 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
             errors: err.errors
         })
     }
-    res.send(err)
+
+    console.error(err)
+    res.status(400).send({
+        errors: [{ message: 'Something went wrong' }]
+    });
 }
