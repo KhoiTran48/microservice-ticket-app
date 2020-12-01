@@ -4,6 +4,7 @@ import 'express-async-errors'
 import cookieSession from 'cookie-session'
 import { createTicketRouter } from './routes/new'
 import { NotFoundError, errorHandler, currentUser } from '@kt_tickets/common'
+import showTicketRouter from './routes/show'
 
 const app = express()
 app.set('trust proxy', true)
@@ -19,6 +20,7 @@ app.use(
 
 app.use(currentUser)
 app.use(createTicketRouter)
+app.use(showTicketRouter)
 
 // cái error này sẽ không chạy vào error-handler, chưa biết tại sao
 // vì use errorHandler không đúng chỗ, ta phải để nó sau tất cả các route
