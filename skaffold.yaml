@@ -10,7 +10,8 @@ build:
   # googleCloudBuild:
   #   projectId: ticket-dev-292608
   artifacts:
-    - image: us.gcr.io/ticket-dev-292608/auth
+    # - image: us.gcr.io/ticket-dev-292608/auth
+    - image: 171195/auth
       context: auth
       docker:
         dockerfile: Dockerfile
