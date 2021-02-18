@@ -56,3 +56,5 @@ test('reserves a ticket', async () => {
     expect(orders.length).toEqual(1)
     expect(orders[0].status).toEqual(OrderStatus.Created)
 })
+
+test.todo('emits an order created event')
