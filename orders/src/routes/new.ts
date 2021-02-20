@@ -1,9 +1,11 @@
+import { OrderCreatedPublisher } from './../events/publishers/order-created-publisher';
 import { NotFoundError, requireAuth, validateRequest, OrderStatus, BadRequestError } from '@kt_tickets/common';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator'
 import mongoose from 'mongoose';
 import { Ticket } from '../models/ticket'
 import { Order } from '../models/order'
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 const EXPIRATION_WINDOW_SECONDS = 15*60
@@ -45,6 +47,17 @@ validateRequest
 	await order.save()
 
 	// publish an event saying that an order was created
+	await new OrderCreatedPublisher(natsWrapper.client).publish({
+		id: order.id,
+		status: order.status,
+		userId: order.userId,
+		expiresAt: order.expiresAt.toISOString(),
+		ticket: {
+			id: ticket.id,
+			price: ticket.price
+		}
+	})
+
 	res.status(201).send(order);
 });
 
