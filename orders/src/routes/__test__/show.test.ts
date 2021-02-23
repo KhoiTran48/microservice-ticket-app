@@ -1,9 +1,14 @@
 import request from 'supertest'
 import { Ticket } from '../../models/ticket'
 import { app } from '../../app'
+import mongoose from 'mongoose'
 
 test('fetch order of user successfully', async () => {
-    const ticket = await Ticket.build({title: 'concert', price: 20}).save()
+    const ticket = await Ticket.build({
+        id: mongoose.Types.ObjectId().toHexString(),
+        title: 'concert', 
+        price: 20
+    }).save()
     const sessUser = global.signin()
     
     const { body: newOrder } = await request(app)
@@ -21,7 +26,11 @@ test('fetch order of user successfully', async () => {
 })
 
 test('return error if user try to access order of other user', async () => {
-    const ticket = await Ticket.build({title: 'concert', price: 20}).save()
+    const ticket = await Ticket.build({
+        id: mongoose.Types.ObjectId().toHexString(),
+        title: 'concert', 
+        price: 20
+    }).save()
     const sessUser = global.signin()
     
     const { body: newOrder } = await request(app)
