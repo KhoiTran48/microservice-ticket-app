@@ -43,3 +43,11 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+    - image: 171195/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
