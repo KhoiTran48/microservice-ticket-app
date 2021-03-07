@@ -3,6 +3,7 @@ import request from 'supertest'
 import { app } from '../../app'
 import mongoose from 'mongoose'
 import { Order, OrderStatus } from '../../models/order'
+import { Payment } from '../../models/payment';
 
 jest.mock('../../stripe')
 
@@ -61,7 +62,7 @@ test('return 400 if order is cancelled', async () => {
         .expect(400)
 })
 
-test('return 204 with valid inputs', async () => {
+test('return 201 with valid inputs', async () => {
     const userId = mongoose.Types.ObjectId().toHexString()
 
     const order = Order.build({
@@ -86,5 +87,8 @@ test('return 204 with valid inputs', async () => {
     expect(chargeOptions.source).toEqual('tok_visa')
     expect(chargeOptions.amount).toEqual(20*100)
     expect(chargeOptions.currency).toEqual('usd')
+
+    const payment = await Payment.findOne({ orderId: order.id, stripeId: "stripe_id"})
+    expect(payment).not.toBeNull()
 
 })
