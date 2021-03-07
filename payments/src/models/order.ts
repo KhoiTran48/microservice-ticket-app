@@ -54,7 +54,7 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
     return new Order({
         _id: attrs.id,
         version: attrs.version,
-        userId: attrs.version,
+        userId: attrs.userId,
         price: attrs.price,
         status: attrs.status
     })
