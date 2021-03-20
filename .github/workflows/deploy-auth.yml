@@ -1,6 +1,8 @@
+
 name: deploy-auth
 
 on:
+  # khi auth folder của branch master thay đổi thì thực hiện tiếp
   push:
     branches:
       - master
@@ -12,9 +14,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      # build image
       - run: cd auth && docker build -t 171195/auth .
+      # login and push image to docker hub
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      # push to docker hub
       - run: docker push 171195/auth
+
+      # install doctl with API key
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      # connect k8s vs context
+      - run: doctl kubernetes cluster kubeconfig save ticketing
+
+      # restart auth-depl của context
+      - run: kubectl rollout restart deployment auth-depl
