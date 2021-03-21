@@ -10,13 +10,13 @@ deploy:
       # trên github, ta sẽ sử dụng k8s-prod, vì lúc này ingress-ngix sẽ dùng host của prod
       - ./infra/k8s-dev/*
 build:
-  local:
-    push: false
-  # googleCloudBuild:
-  #   projectId: ticket-dev-292608
+  # local:
+  #   push: false
+  googleCloudBuild:
+    projectId: ticket-dev-292608
   artifacts:
-    # - image: us.gcr.io/ticket-dev-292608/auth
-    - image: 171195/auth
+    - image: us.gcr.io/ticket-dev-292608/auth
+    # - image: 171195/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -24,7 +24,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: 171195/client-ticket
+    - image: us.gcr.io/ticket-dev-292608/client-ticket
       context: client
       docker:
         dockerfile: Dockerfile
@@ -32,7 +32,7 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
-    - image: 171195/ticket
+    - image: us.gcr.io/ticket-dev-292608/ticket
       context: ticket
       docker:
         dockerfile: Dockerfile
@@ -40,7 +40,7 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
-    - image: 171195/orders
+    - image: us.gcr.io/ticket-dev-292608/orders
       context: orders
       docker:
         dockerfile: Dockerfile
@@ -48,7 +48,7 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
-    - image: 171195/expiration
+    - image: us.gcr.io/ticket-dev-292608/expiration
       context: expiration
       docker:
         dockerfile: Dockerfile
@@ -56,7 +56,7 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
-    - image: 171195/payments
+    - image: us.gcr.io/ticket-dev-292608/payments
       context: payments
       docker:
         dockerfile: Dockerfile

@@ -10,7 +10,7 @@ spec:
     # browser sẽ dùng url này để request vào k8s cluster
     # có config path nào thì trỏ tới service nào kìa
     # ta phải add 127.0.0.1   ticket.dev trong file /etc/hosts
-    - host: ticket.local
+    - host: ticket.gc
       http:
         paths:
           - path: /api/payments/?(.*)
